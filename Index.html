@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+	<p><b><font size = "7", color = "Red">práctica final</font></b>, <br><font size = 8>Visor Tematico sobre San Pedro Sula</font></br><br>(Analisis de barrios y colonias, infraestructura vial y precipitación) </br></p>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Proyecto CTE-524</title>
+		
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+		integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+		crossorigin=""/>
+  
+		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+		integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+		crossorigin="">
+  
+		</script>
+		
+		<script src="https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js"
+		integrity="sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q=="
+		crossorigin=""></script>
+		
+		
+		<!--Leaflet Plugins-->
+		<link rel="stylesheet" href="Control.MiniMap.css" />
+		<script src="Control.MiniMap.js" type= "text/javascript">
+		</script>
+	
+		<link rel="stylesheet" href="L.Control.MousePosition.css" />
+		<script src="L.Control.MousePosition.js" type= "text/javascript">
+		</script>
+		
+		<link rel='stylesheet' href='leaflet.fullscreen.css'  />
+		<script src='Leaflet.fullscreen.js'></script>
+		
+		<link rel="stylesheet" href="leaflet.viewcenter.css" />
+		<script src="leaflet.viewcenter.js"></script>
+		<script src="Leaflet.MakiMarkers.js"></script>
+		<link rel="stylesheet" href="dvf.css" /> 
+		<script src="leaflet-dvf.js"></script> 
+		<script src="leaflet-dvf.markers.js"></script> 
+		<script src="leaflet.dvf.regularpolygon.js"></script>  		
+
+
+	</head>
+	
+	<body>
+	
+		<div id="map" style="width: 1500px; height: 800px;">
+		</div>
+		
+		<div class='space-bottom'>
+        <div id='map' class='col12 row10'></div>
+		</div>
+		
+		<script>
+	
+		var osm = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', 
+		{attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>', 
+		id: 'mapbox.streets-satellite', 
+		accessToken:'pk.eyJ1Ijoib25uZWxhdmlsYTg3IiwiYSI6ImNrMHVhajcxdDBtOGIzYnJ6MWtpN3VjZ2cifQ.DEimOkZh4gS4QhK_Qre0mw',
+		maxZoom: 20,
+		minZoom: 6,
+		keyboard: true
+		})
+		
+		var osm2 = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', 
+		{attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>', 
+		id: 'mapbox.dark', 
+		accessToken:'pk.eyJ1Ijoib25uZWxhdmlsYTg3IiwiYSI6ImNrMHVhajcxdDBtOGIzYnJ6MWtpN3VjZ2cifQ.DEimOkZh4gS4QhK_Qre0mw',
+		maxZoom: 20,
+		minZoom: 5,
+		keyboard: true
+		
+		});
+	
+	var ESRI = L.esri.basemapLayer('ImageryFirefly');
+		
+		var ESRI_topo = L.esri.basemapLayer('Topographic');
+	
+			var mapa = L.map('map',{
+		center: [15.503545, -88.019472],
+		zoom:12,
+		layers: osm,
+		zoomControl: false,
+		fullscreenControl: {pseudoFullscreen: false, position: 'topleft'
+		},
+		maxBounds: [[15.582030, -88.104460],[15.391259, -87.906613]]
+		});
+		
+		<!--MakiMarkers-->
+
+		L.MakiMarkers.accessToken = 'pk.eyJ1Ijoib25uZWxhdmlsYTg3IiwiYSI6ImNrMHVhajcxdDBtOGIzYnJ6MWtpN3VjZ2cifQ.DEimOkZh4gS4QhK_Qre0mw';
+		
+		var maki1= L.MakiMarkers.icon ({icon:"post", color: "#6baed6", size:"l"}); 
+		var toncontin = L.marker([15.498473, -88.024931],{icon:maki1}).addTo(mapa);
+		toncontin.bindPopup("Correo Nacional");
+		
+		var maki2= L.MakiMarkers.icon ({icon:"fast-food", color: "#fd8d3c", size:"l"}); 
+		var civico = L.marker([15.500428, -88.019865],{icon:maki2}).addTo(mapa);
+		civico.bindPopup("Mercado");
+		
+		var maki3= L.MakiMarkers.icon ({icon:"grocery", color: "#f768a1", size:"l"}); 
+		var civico = L.marker([15.515843, -88.019828],{icon:maki3}).addTo(mapa);
+		civico.bindPopup("Supermercado Junior");
+		
+		var maki4= L.MakiMarkers.icon ({icon:"suitcase", color: "#fc4e2a", size:"l"}); 
+		var civico = L.marker([15.510939, -88.028250],{icon:maki4}).addTo(mapa);
+		civico.bindPopup("Mercado Guamilito");
+				
+		<!--L.icon-->
+				
+		var icono3 = L.icon({
+		iconUrl: 'icon2-iglesia.png',
+		iconSize: [30, 40],
+		});
+		var marker1= L.marker([15.505478, -88.024442], {icon: icono3}).addTo(mapa);
+		marker1.bindPopup("Catedral de San Pedro");
+		
+		<!--Carretera-->
+		carre = L.tileLayer.wms("http://localhost:8080/geoserver/SPS/wms?service=WMS", {
+		layers: "SPS:Carreterasps",
+		format: 'image/png',
+		transparent: true,
+		version: '1.1.0',
+		attribution: "© Instituto Geográfico Nacional C/ General Ibáñez de Íbero 3, 28003 Madrid - España"
+		});
+		
+/*http://localhost:8080/geoserver/SPS/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPS:Carreterasps&styles=&bbox=-88.19720043874027,15.382233222501835,-87.88745881047645,15.60404694347071&width=768&height=549&srs=EPSG:4326&format=application/openlayers*/		
+		
+		<!--Colonias-->
+		colo = L.tileLayer.wms("http://localhost:8080/geoserver/SPS/wms?service=WMS", {
+		layers: "SPS:coloniasps",
+		format: 'image/png',
+		transparent: true,
+		version: '1.1.0',
+		attribution: "Local geoserver"
+		});	
+		
+/*http://localhost:8080/geoserver/SPS/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPS:coloniasps&styles=&bbox=-88.19947752158299,15.374911875928813,-87.8858167392608,15.604691708390357&width=768&height=562&srs=EPSG:4326&format=application/openlayers*/		
+		
+		<!--Perimetro-->
+		peri = L.tileLayer.wms("http://localhost:8080/geoserver/SPS/wms?service=WMS", {
+		layers: "SPS:perimetrosps",
+		format: 'image/png',
+		transparent: true,
+		version: '1.1.0',
+		attribution: "Local geoserver"
+		});
+		
+/*http://localhost:8080/geoserver/SPS/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPS:perimetrosps&styles=&bbox=-88.41094587991094,15.37299895720285,-87.84939299860467,15.6294259688551&width=768&height=350&srs=EPSG:4326&format=application/openlayers*/		
+		
+		<!--Precipitacion Isoyetas-->
+		preci = L.tileLayer.wms("http://localhost:8080/geoserver/SPS/wms?service=WMS", {
+		layers: "SPS:precipitacion",
+		format: 'image/png',
+		transparent: true,
+		version: '1.1.0',
+		attribution: "Local geoserver"
+		});	
+		
+/*http://localhost:8080/geoserver/SPS/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPS:precipitacion&styles=&bbox=-88.40467603343893,15.37872759252074,-87.85291673069939,15.62454515496588&width=768&height=342&srs=EPSG:4326&format=application/openlayers*/				
+		
+		var capasBase = {
+		
+			"Streets-satellite de MapBox": osm,
+			/*"Streets de Mapbox": osm2,*/
+			"Esri - Imagery": ESRI,
+			"Esri - Topografico": ESRI_topo,
+			};
+			
+		var capasOverlay = {
+		
+			"Colonias SPS": colo,
+			"Perimetro SPS": peri,
+			"isoyetas de precipitación": preci,
+			"Carreteras SPS": carre,
+			};
+				
+		new L.control.layers(capasBase, capasOverlay,{collapsed:true}).addTo(mapa);
+		
+		<!--circulo -->
+	
+		var circulo1 = L.circle([15.505478, -88.024442], 900, {color:'white', weigth:8, fillColor:"yellow", fillOpacity:0.30}).bindTooltip('Centro Historico San Pedro Sula', {direction: "auto", opacity:0.7});
+		
+		<!--polilinea -->
+		
+		var polilinea1 = L.polyline([[15.507741, -88.047467], [15.506749, -88.037158], [15.505530, -88.022499],[15.501961, -88.004176],[15.501551, -88.000778],[15.502195, -87.993077]], {color:"yellow", weigth:10, fillColor:"red", fillOpacity:0.7}).bindTooltip('Primera Calle de San Pedro Sula', {direction: "vehiculo", opacity:0.8});
+
+
+		var Capas = L.layerGroup ([circulo1,polilinea1]).addTo(mapa);
+
+		
+		new L.Control.Zoom({ position: 'topright'}).addTo(mapa);
+		
+		var miniMap = new L.Control.MiniMap(osm2,{ toggleDisplay: true, position: 'bottomright' }).addTo(mapa);
+		var MousePosition = new L.control.mousePosition(osm).addTo(mapa);
+		var escala = L.control.scale().addTo(mapa);
+		var viewCenter = new L.Control.ViewCenter(mapa);
+			mapa.addControl(viewCenter);
+		
+	</script>
+	
+	</body>
+</html>
